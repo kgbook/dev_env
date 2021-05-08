@@ -24,6 +24,7 @@ sudo apt install -y imagemagick
 
 ### docker
 curl -sSL https://get.docker.com/ | sh
+docker/docker_action.sh  build
 
 ### sqlite
 sudo apt install -y sqlite3 sqlitebrowser

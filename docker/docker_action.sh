@@ -1,8 +1,11 @@
 cmd=$1
 tag=$2
 version=$3
-CtxDir=$PWD/envs
+work_dir=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
+CtxDir=$work_dir/envs
 
+echo "work_dir:$work_dir"
+echo "CtxDir:$CtxDir"
 if [ x$tag = x ] ;then
     tag=iot-rk
 fi
