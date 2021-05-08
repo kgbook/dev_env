@@ -4,7 +4,7 @@ sudo dpkg --add-architecture i386
 sudo apt update
 
 ### basic
-sudo apt install -y build-essential gcc g++ cmake gdb python pkg-config sudo cppman man-db exfat-fuse exfat-utils ffmpeg subversion fcitx  fcitx-googlepinyin fonts-wqy-microhei gzip unzip unrar bzip2 tar zlib1g-dev lib32z1 liblz4-tool xz-utils adb tmux mtools  parted libudev-dev libusb-1.0-0-dev autoconf autotools-dev libsigsegv2 m4 intltool libdrm-dev sed make binutils patch bc gawk perl python python-matplotlib aria2 curl wget sync openssh-client cpio libncurses5 libqt4-dev
+sudo apt install -y build-essential gcc g++ cmake gdb python pkg-config sudo cppman man-db exfat-fuse exfat-utils ffmpeg subversion fcitx  fcitx-googlepinyin fonts-wqy-microhei gzip unzip unrar bzip2 tar zlib1g-dev lib32z1 liblz4-tool xz-utils adb tmux mtools  parted libudev-dev libusb-1.0-0-dev autoconf autotools-dev libsigsegv2 m4 intltool libdrm-dev sed make binutils patch bc gawk perl python python-matplotlib aria2 curl wget sync cpio libncurses5 libqt4-dev
 libglib2.0-dev libgtk2.0-dev libglade2-dev asciidoc w3m dblatex graphviz libc6:i386 libssl-dev expect fakeroot diffstat texinfo uuid-dev locales bison pkg-config ncurses-dev gperf lib32gcc-7-dev  g++-7  libstdc++-7-dev bilson flex liblz4-tool time automake-1.15
 
 ### arm toolchain
@@ -65,6 +65,11 @@ systemctl restart smbd
 sudo apt install -y cifs-utils
 # sudo mount -t cifs -o user=xxx,pass=xxx  //xxx.xxx.xxx.xxx/临时文件 /mnt
 
+### ssh
+sudo apt install -y openssh-client
+ssh-keygen
+cp home/.ssh/config ~/.ssh
+
 ### sshfs
 sudo apt install -y sshfs
 
@@ -89,5 +94,3 @@ cp home/.gitconfig ~/
 ### minicom
 sudo apt install -y minicom
 cp home/.minirc.dfl ~/
-
-
