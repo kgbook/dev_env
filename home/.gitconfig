@@ -1,0 +1,27 @@
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	cm = commit -m
+	st = status
+	review = !sh -c \"git push origin HEAD:refs/for/$1\" -
+	ca = commit --amend --reset-author
+[core]
+	editor = vim
+	autocrlf = false
+	protectNTFS = false
+	fileMode = false
+[color "diff"]
+	meta = blue black bold
+[color]
+	ui = true
+[pull]
+	rebase = true
+	followTags = true
+[push]
+	followTags = true
+[user]
+	email = corykang913@gmail.com
+	name = eric
+[credential]
+	helper = store

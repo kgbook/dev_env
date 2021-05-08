@@ -1,0 +1,109 @@
+# VERSION v1.0
+# Author:  kgbook <kgbook.sz@outlook.com>
+
+FROM ubuntu:16.04
+MAINTAINER kgbook, kgbook.sz@outlook.com
+
+ENV TZ=Asia/Hong_Kong
+COPY vimrc bash_aliases sources.list /tmp/
+
+RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
+    apt-get update && \
+    dpkg --add-architecture i386 && \
+    apt-get update &&\
+    apt-get install -y \
+    sudo \
+	repo \
+	gcc-arm-linux-gnueabihf \
+	u-boot-tools \
+	device-tree-compiler \
+	gcc-aarch64-linux-gnu \
+	mtools \
+	parted \
+	libudev-dev \
+    libusb-1.0-0-dev \
+	python-linaro-image-tools \
+	linaro-image-tools \
+	autoconf\
+	autotools-dev \
+	libsigsegv2 \ 
+	m4 \
+	intltool \
+	libdrm-dev \
+	curl \
+	sed \
+	make \
+	binutils \
+	build-essential \ 
+	gcc \
+	g++ \
+	bash \
+	patch \
+	gzip \
+	gawk \
+	bzip2 \
+	perl \
+	tar \
+	cpio \
+	python \
+	unzip \
+	rsync \
+	file \
+	bc \
+	wget \
+	libncurses5 \
+	libqt4-dev \
+	libglib2.0-dev \
+	libgtk2.0-dev \
+	libglade2-dev \
+	cvs \
+	git \
+	mercurial \
+	rsync \
+	openssh-client \
+	subversion \
+	asciidoc \
+	w3m \
+	dblatex \
+	graphviz \
+	python-matplotlib \
+	libc6:i386 \
+	libssl-dev \
+	expect \
+	fakeroot \
+	cmake \
+    diffstat \
+    unrar-free \
+    texinfo \
+    uuid-dev \
+    xz-utils \
+	zlib1g-dev\
+    locales \
+    bison \
+    pkg-config \
+	ncurses-dev\
+	mtd-utils \
+	gperf\
+	lib32z1 \
+	liblz4-tool \
+	time \
+    vim && \ 
+    apt-get clean && \
+    useradd -m admin -d /home/admin -G sudo -U -s /bin/bash && \
+    echo 'admin:admin' | chpasswd && \
+    ln -sf /bin/bash /bin/sh && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &&\
+    cd /home/admin && \
+    mv /tmp/vimrc .vimrc && \
+    mv /tmp/bash_aliases .bash_aliases && \
+    echo "PROMPT_DIRTRIM=1" >> .bashrc && \
+    sed -i 's/#\ en_US.UTF-8\ UTF-8/en_US.UTF-8\ UTF-8/g' /etc/locale.gen && \
+    sed -i 's/#\ zh_CN.UTF-8\ UTF-8/zh_CN.UTF-8\ UTF-8/g' /etc/locale.gen && \
+    locale-gen && \
+    echo 'export LC_ALL="en_US.UTF-8"' >> .bashrc && \
+    echo 'export LANG="en_US.UTF-8"' >> .bashrc && \
+    rm -rf /tmp/*  && sync
+
+USER admin
+WORKDIR /home/admin
+ENV USER admin

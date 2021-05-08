@@ -1,0 +1,12 @@
+# Machine-generated file - use setup menu in minicom to change parameters.
+pu port             /dev/ttyUSB1
+pu baudrate         1500000
+pu mdialpre         
+pu mdialsuf         
+pu mdialpre2        
+pu mdialsuf2        
+pu mdialpre3        
+pu mdialsuf3        
+pu mautobaud        Yes
+pu rtscts           No
+pu logfname         minilog_serial.log
