@@ -1,0 +1,44 @@
+# Do not use the Last-modified header to set the file modification time
+--no-mtime
+
+# If a merge is required (e.g. bestvideo+bestaudio), output to given container format. One of mkv, mp4, ogg, webm, flv. Ignored if no merge is required 
+--merge-output-format mp4
+
+# Output filename template
+-o "~/ssd/download/%(autonumber)s_%(title)s.%(ext)s"
+
+# Restrict filenames to only ASCII
+#--restrict-filenames 
+
+# Number of retries (default is 10), or "infinite".
+--retries infinite
+
+# Continue on download errors, for example to skip unavailable videos in a playlist
+--ignore-errors 
+
+# Do not overwrite files
+--no-overwrites 
+
+# Force resume of partially downloaded files. By default, youtube-dl will resume downloads if possible.
+--continue
+
+# Write subtitle file
+--write-sub 
+
+# Convert the subtitles to other format (currently supported: srt|ass|vtt|lrc)
+--convert-subs srt 
+
+# Video format code, see the "FORMAT SELECTION" for all the info
+--format "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+
+# Specify a custom user agent
+#--user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:68.9) Gecko/20100101 Goanna/4.4 Firefox/52.9 PaleMoon/28.8.3" 
+
+# Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper scheme. For example socks5://127.0.0.1:1080/. Pass in an empty string (--proxy "") for direct connection
+--proxy "socks5://127.0.0.1:7448/"
+
+# Use the specified external downloader. Currently supports aria2c,avconv,axel,c
+--external-downloader aria2c
+
+# Give these arguments to the external downloader
+--external-downloader-args '--file-allocation=prealloc --continue=true --max-concurrent-downloads=5 --max-connection-per-server=5 --split=5 --min-split-size=1M --summary-interval=0 --max-tries=0 --retry-wait=5 --http-accept-gzip=true --enable-http-keep-alive=true --enable-http-pipelining=true' --exec 'ffmpeg-normalize -c:a libfdk_aac --extension mp4 -e="-vbr 3" {}'
