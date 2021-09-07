@@ -10,7 +10,8 @@
 	editor = vim
 	autocrlf = false
 	protectNTFS = false
-	fileMode = false
+    fileMode = false
+    quotepath = false
 [color "diff"]
 	meta = blue black bold
 [color]
