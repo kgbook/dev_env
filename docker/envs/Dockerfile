@@ -5,7 +5,7 @@ FROM ubuntu:18.04
 MAINTAINER kgbook, kgbook.sz@outlook.com
 
 ENV TZ=Asia/Hong_Kong
-COPY vimrc bash_aliases sources.list gdbinit /tmp/
+COPY vimrc bash_aliases sources.list gdbinit gitconfig /tmp/
 
 RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     apt-get update && \
@@ -104,6 +104,7 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     echo 'export LANG="en_US.UTF-8"' >> .bashrc && \
     svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python /opt/python && \
     cp -f /tmp/gdbinit /home/admin/.gdbinit && \
+    cp -f /tmp/gitconfig /home/admin/.gitconfig && \
     rm -rf /tmp/*  && \
     sync
 
