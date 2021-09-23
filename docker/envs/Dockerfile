@@ -1,11 +1,11 @@
 # VERSION v1.0
 # Author:  kgbook <kgbook.sz@outlook.com>
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER kgbook, kgbook.sz@outlook.com
 
 ENV TZ=Asia/Hong_Kong
-COPY vimrc bash_aliases sources.list /tmp/
+COPY vimrc bash_aliases sources.list gdbinit /tmp/
 
 RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     apt-get update && \
@@ -102,7 +102,10 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     locale-gen && \
     echo 'export LC_ALL="en_US.UTF-8"' >> .bashrc && \
     echo 'export LANG="en_US.UTF-8"' >> .bashrc && \
-    rm -rf /tmp/*  && sync
+    svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python /opt/python && \
+    cp -f /tmp/gdbinit /home/admin/.gdbinit && \
+    rm -rf /tmp/*  && \
+    sync
 
 USER admin
 WORKDIR /home/admin
