@@ -18,6 +18,7 @@ if [ x$cmd = x"build" ] ;then
     docker build --no-cache -f $CtxDir/Dockerfile --tag $tag:$version $CtxDir
 elif [ x$cmd = x"run" ] ;then
     docker run -it --name $tag --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/Documents:/home/admin/Documents  -u admin $tag:$version   /bin/bash
+    #docker run -it --name $tag --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/konka:/home/admin/konka  -u admin $tag:$version   /bin/bash
 elif [ x$cmd = x'start'  ] ;then
     docker start $tag
     docker exec -it $tag /bin/bash

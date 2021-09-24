@@ -4,6 +4,7 @@
 FROM ubuntu:18.04
 MAINTAINER kgbook, kgbook.sz@outlook.com
 
+ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Hong_Kong
 COPY vimrc bash_aliases sources.list gdbinit gitconfig /tmp/
 
@@ -15,6 +16,7 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     sudo \
 	repo \
     apt-utils \
+    tzdata \
 	gcc-arm-linux-gnueabihf \
 	u-boot-tools \
 	device-tree-compiler \
