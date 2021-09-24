@@ -53,7 +53,8 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
 	rsync \
 	file \
 	bc \
-	wget \
+	flex \
+    wget \
 	libncurses5 \
 	libqt4-dev \
 	libglib2.0-dev \
