@@ -97,6 +97,7 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     echo 'admin:admin' | chpasswd && \
     ln -sf /bin/bash /bin/sh && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &&\
+    ln -sf /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4 && \
     cd /home/admin && \
     mv /tmp/vimrc .vimrc && \
     mv /tmp/bash_aliases .bash_aliases && \

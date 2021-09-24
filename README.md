@@ -14,7 +14,7 @@ $ ./docker_action.sh build iot v1.0
 $ ./docker_action.sh run iot 1.0
 ```
 
-Now, you have a docker container named iot:v1.0.
+Now, you have a docker container named *iot:v1.0*.
 ```bash
 $ docker container ls
 CONTAINER ID   IMAGE      COMMAND       CREATED             STATUS             PORTS     NAMES
@@ -35,7 +35,6 @@ function docker_dev_start() {
      docker stop $tag
  }
 
- alias docker-run='docker run -it --name iot --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/Documents:/home/admin/Documents  -u admin iot:v1.0   /bin/bash'
  alias docker-start='docker_dev_start iot'
  alias docker-stop='docker_dev_stop iot'
 ```
