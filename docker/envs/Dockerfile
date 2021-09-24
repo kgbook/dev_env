@@ -14,6 +14,7 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     apt-get install -y \
     sudo \
 	repo \
+    apt-utils \
 	gcc-arm-linux-gnueabihf \
 	u-boot-tools \
 	device-tree-compiler \
