@@ -25,6 +25,8 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+export LC_ALL=C
 PATH=$HOME/konka/P_RK1109/sourcecode/prebuilts/gcc/linux-x86/arm/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin:$PATH
 PATH=$HOME/konka/Hi3516/sourceCode/toolchain/arm-himix200-linux/bin:$PATH
 #PATH=$HOME/konka/P_hi3518ev300/toolchain/hcc_riscv32/bin:$PATH
