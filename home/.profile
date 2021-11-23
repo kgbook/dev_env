@@ -26,15 +26,3 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export LC_ALL=C
-PATH=$HOME/konka/P_RK1109/sourcecode/prebuilts/gcc/linux-x86/arm/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin:$PATH
-PATH=$HOME/konka/Hi3516/sourceCode/toolchain/arm-himix200-linux/bin:$PATH
-#PATH=$HOME/konka/P_hi3518ev300/toolchain/hcc_riscv32/bin:$PATH
-#PATH=$HOME/konka/P_hi3518ev300/toolchain/arm-himix100-linux/bin:$PATH
-#PATH=$HOME/konka/P_ssc335/sourcecode/toolchain/arm-buildroot-linux-uclibcgnueabihf-4.9.4/bin:$PATH
-#PATH=$HOME/konka/P_ssc335/sourcecode/toolchain/arm-linux-gnueabihf-4.8.3-201404/bin:$PATH
-#PATH=$HOME/konka/P_ssc335/sourcecode/toolchain/gcc-arm-8.2-2018.08-x86_64-arm-linux-gnueabihf/bin:$PATH
-PATH=$HOME/konka/P_RK1109/sourcecode/tools/linux/Linux_Upgrade_Tool/Linux_Upgrade_Tool:$PATH
-PATH=$HOME/Tools/XMind/xmind-8-update9-linux/XMind_amd64:$PATH
-PATH=$HOME/Tools/CLion/clion-2019.3.5/bin:$PATH
-export PATH=$PATH

@@ -24,10 +24,6 @@ sudo apt install -y guvcview
 ### imagemagick
 sudo apt install -y imagemagick
 
-### docker
-curl -sSL https://get.docker.com/ | sh
-docker/docker_action.sh  build
-
 ### sqlite
 sudo apt install -y sqlite3 sqlitebrowser
 
@@ -47,9 +43,9 @@ wget -O- https://deepin-wine.i-m.dev/setup.sh | sh
 sudo apt install -y deepin.com.wechat
 
 ### bing wallpaper
-sudo add-apt-repository ppa:whizzzkid/bingwallpaper
-sudo apt-get update
-sudo apt-get install bingwallpaper
+#sudo add-apt-repository ppa:whizzzkid/bingwallpaper
+#sudo apt-get update
+#sudo apt-get install bingwallpaper
 
 ### nfs server
 sudo apt install nfs-kernel-server
@@ -86,6 +82,13 @@ sudo usermod -aG docker $USER
 sudo usermod -aG dialout $USER
 sudo usermod -aG plugdev $USER
 
+### docker
+curl -sSL https://get.docker.com/ | sh
+sudo cp etc/docker/daemon.sh /etc/docker
+sudo systemctl daemon-reload
+sudo service docker restart
+docker/docker_action.sh  build
+
 ### bash
 sudo ln -sf /bin/bash /bin/sh
 cp home/.bash_aliases ~/
@@ -104,9 +107,12 @@ cp home/.gitconfig ~/
 sudo apt install -y minicom
 cp home/.minirc.dfl ~/
 
+## tmux
+sudo apt install -y tmux
+
 ## repo
-repo_path=~/Tools/repo
+#repo_path=~/Tools/repo
 mkdir -p $repo_path
-wget  https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -O $repo_path
-echo "export PATH=$PATH:$repo_path" >> ~/.bashrc
-echo 'export REPO_URL="https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/"' >> ~/.bashrc
+#wget  https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -O $repo_path
+#echo "export PATH=$PATH:$repo_path" >> ~/.bashrc
+#echo 'export REPO_URL="https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/"' >> ~/.bashrc
