@@ -1,4 +1,4 @@
-## Set up host development environments
+## Setup host development environments
 
 ```bash
 $ git clone https://github.com/kgbook/dev_env.git
@@ -6,7 +6,24 @@ $ cd dev_env
 $ bash setup.sh
 ```
 
-## set up docker development environments
+## Setup docker development environments
+
+### Install Docker
+
+- Debian / Red Hat
+
+```bash
+$ curl -sSL https://get.docker.com/ | sh
+$ sudo usermod -aG docker $USER
+```
+- Arch Linux
+
+```bash
+$ sudo pacman -S docker
+$ sudo usermod -aG docker $USER
+```
+
+### Setup Docker Container
 ```
 $ git clone https://github.com/kgbook/dev_env.git
 $ cd dev_env/docker
