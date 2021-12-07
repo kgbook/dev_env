@@ -130,6 +130,7 @@ sudo apt install code # or code-insiders
 ## repo
 repo_path=~/Tools/repo
 mkdir -p $repo_path
-wget  https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -O $repo_path
+wget  https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -O $repo_path/repo
+chmod +x $repo_path/repo
 echo "export PATH=$PATH:$repo_path" >> ~/.bashrc
 echo 'export REPO_URL="https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/"' >> ~/.bashrc
