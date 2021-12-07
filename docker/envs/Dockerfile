@@ -91,7 +91,19 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
 	lib32z1 \
 	liblz4-tool \
 	time \
-    vim && \ 
+    vim \
+    gnupg \
+    gcc-multilib \
+    g++-multilib \
+    libc6-dev-i386 \
+    lib32ncurses5-dev \
+    x11proto-core-dev \
+    libx11-dev \
+    lib32z1-dev \
+    libgl1-mesa-dev \
+    libxml2-utils \
+    xsltproc \
+    fontconfig && \ 
     apt-get clean && \
     useradd -m admin -d /home/admin -G sudo -U -s /bin/bash && \
     echo 'admin:admin' | chpasswd && \
