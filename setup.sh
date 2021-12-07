@@ -28,6 +28,7 @@ sudo apt install -y imagemagick
 sudo apt install -y sqlite3 sqlitebrowser
 
 ### typora
+### not free after Beta version
 wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
 sudo add-apt-repository 'deb https://typora.io/linux ./'
 sudo apt install -y typora
@@ -83,7 +84,14 @@ sudo usermod -aG dialout $USER
 sudo usermod -aG plugdev $USER
 
 ### docker
+
+## for Debian / Red Hat
 curl -sSL https://get.docker.com/ | sh
+
+## for Arch Linux
+# sudo pacman -S docker
+
+sudo usermod -aG docker $USER
 sudo cp etc/docker/daemon.sh /etc/docker
 sudo systemctl daemon-reload
 sudo service docker restart
@@ -120,8 +128,8 @@ sudo apt update
 sudo apt install code # or code-insiders
 
 ## repo
-#repo_path=~/Tools/repo
+repo_path=~/Tools/repo
 mkdir -p $repo_path
-#wget  https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -O $repo_path
-#echo "export PATH=$PATH:$repo_path" >> ~/.bashrc
-#echo 'export REPO_URL="https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/"' >> ~/.bashrc
+wget  https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -O $repo_path
+echo "export PATH=$PATH:$repo_path" >> ~/.bashrc
+echo 'export REPO_URL="https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/"' >> ~/.bashrc
