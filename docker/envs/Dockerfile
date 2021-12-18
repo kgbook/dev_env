@@ -11,16 +11,16 @@ COPY vimrc bash_aliases sources.list gdbinit gitconfig /tmp/
 RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     apt-get update && \
     dpkg --add-architecture i386 && \
-    apt-get update &&\
-    apt-get install -y \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y apt-utils aptitude && \
+aptitude install -y \
     sudo \
-	repo \
-    apt-utils \
     tzdata \
-	gcc-arm-linux-gnueabihf \
-	u-boot-tools \
-	device-tree-compiler \
-	gcc-aarch64-linux-gnu \
+    gcc-arm-linux-gnueabihf \
+    u-boot-tools \
+    device-tree-compiler \
+    gcc-aarch64-linux-gnu \
 	mtools \
 	parted \
 	libudev-dev \
@@ -104,7 +104,7 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     libxml2-utils \
     xsltproc \
     fontconfig && \ 
-    apt-get clean && \
+    aptitude clean && \
     useradd -m admin -d /home/admin -G sudo -U -s /bin/bash && \
     echo 'admin:admin' | chpasswd && \
     ln -sf /bin/bash /bin/sh && \
@@ -117,8 +117,8 @@ RUN cp -f /tmp/sources.list /etc/apt/sources.list && \
     sed -i 's/#\ en_US.UTF-8\ UTF-8/en_US.UTF-8\ UTF-8/g' /etc/locale.gen && \
     sed -i 's/#\ zh_CN.UTF-8\ UTF-8/zh_CN.UTF-8\ UTF-8/g' /etc/locale.gen && \
     locale-gen && \
-    echo 'export LC_ALL="C"' >> .bashrc && \
-    echo 'export LANG="en_US.UTF-8"' >> .bashrc && \
+    echo 'export LANG=zh_CN.UTF-8' >> .bashrc && \
+    echo 'export LANGUAGE=zh_CN:en_US' >> .bashrc && \
     svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python /opt/python && \
     cp -f /tmp/gdbinit /home/admin/.gdbinit && \
     cp -f /tmp/gitconfig /home/admin/.gitconfig && \
