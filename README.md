@@ -22,20 +22,32 @@ $ sudo usermod -aG docker $USER
 $ sudo pacman -S docker
 $ sudo usermod -aG docker $USER
 ```
+Auto start after login:
+```bash
+$ systemctl enable docker
+```
 
 ### Setup Docker Container
+
+- Pull from Docker Hub
+
+```bash
+$ docker pull alpha0x1/dev:v1.0
+```
+
+- Build from Dockerfile
 ```
 $ git clone https://github.com/kgbook/dev_env.git
 $ cd dev_env/docker
-$ ./docker_action.sh build iot v1.0
-$ ./docker_action.sh run iot 1.0
+$ ./docker_action.sh build dev v1.0
+$ ./docker_action.sh run dev 1.0
 ```
 
 Now, you have a docker container named *iot:v1.0*.
 ```bash
 $ docker container ls
 CONTAINER ID   IMAGE      COMMAND       CREATED             STATUS             PORTS     NAMES
-9357774c3d6d   iot:v1.0   "/bin/bash"   About an hour ago   Up About an hour             iot
+9357774c3d6d   dev:v1.0   "/bin/bash"   About an hour ago   Up About an hour             dev
 ```
 
 And alias somethings:
@@ -52,8 +64,8 @@ function docker_dev_start() {
      docker stop $tag
  }
 
- alias docker-start='docker_dev_start iot'
- alias docker-stop='docker_dev_stop iot'
+ alias docker-start='docker_dev_start dev'
+ alias docker-stop='docker_dev_stop dev'
 ```
 
-Then, you can use `docker-start` to enter *iot:v1.0* container, exit with `docker-stop`.
+Then, you can use `docker-start` to enter *dev:v1.0* container, exit with `docker-stop`.
