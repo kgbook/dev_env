@@ -73,6 +73,6 @@ function docker_dev_start() {
  alias docker-stop='docker_dev_stop dev'
 ```
 
-you will have a container named `dev:v1.0` after running `docker-run` command.
+you will have a container named `dev:v1.0` after running `docker-run` command if you pulled from the docker HUB.
 
-Then, you can use `docker-start` to enter *dev:v1.0* container, exit with `docker-stop`.
+Then, you can use `docker-start` to enter the container, exit with `docker-stop`.
