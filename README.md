@@ -1,3 +1,5 @@
+[TOC]
+
 ## Setup host development environments
 
 ```bash
@@ -37,7 +39,7 @@ $ docker run -it --name dev --privileged -v $HOME/Downloads:/home/admin/Download
 ```
 
 - Or build from Dockerfile
-```
+```bash
 $ git clone https://github.com/kgbook/dev_env.git
 $ cd dev_env/docker
 $ ./docker_action.sh build dev v1.0
@@ -82,7 +84,7 @@ Then, you can use `docker-start` to enter the container, exit with `docker-stop`
 
 ## FAQ
 
-1. error while creating mount source path
+1. **error while creating mount source path**
 
 Make sure that the `$HOME/Workspace` and `$HOME/Downloads` exist. But if one of them is a symbolic file, you should notice that the source path  should exist.
 
@@ -101,7 +103,7 @@ drwxrwxr-x 13 kgbook kgbook 4096 Dec 21 17:42 Tools
 drwxr-xr-x  2 kgbook kgbook 4096 Dec 17 20:19 Videos
 lrwxrwxrwx  1 kgbook kgbook   38 Dec 20 10:06 Workspace -> /run/media/kgbook/ssd
 
-$ ls -l /run/media/kgbook/ssd/project/konka
+$ ls /run/media/kgbook/ssd/project/konka
 ls: cannot access '/run/media/kgbook/ssd': No such file or directory
 ```
 
@@ -122,4 +124,17 @@ Device     Boot Start       End   Sectors   Size Id Type
 /dev/sdb1        2048 976773119 976771072 465.8G 83 Linux
 $ sudo mount -t ext4 /dev/sdb1 /run/media/kgbook/ssd
 ```
+
+2. **failed to create endpoint dev on network bridge**
+
+   Detailed information:
+
+   ```bash
+   $ docker-start
+   Error response from daemon: failed to create endpoint dev on network bridge: failed to add the host (vethc992906) <=> sandbox (veth5595641) pair interfaces: operation not supported
+   Error: failed to start containers: dev
+   Error response from daemon: Container 4a85a4d54698cfcc3ff0f471b145b125964f8d7116e338bb80e720847319d11f is not running
+   ```
+
+   You synchronized the repository databases *and* updated the system's packages with the command `sudo pacman -Syu`. The version of the kernel must have been changed if you encountered the problem! So just `reboot` your machine, and your machine will be ok.
 
