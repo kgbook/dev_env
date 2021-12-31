@@ -64,7 +64,6 @@ alias mount4.5='sudo mount -t cifs  //172.20.4.5/临时文件 ~/mnt -o username=
 alias ..='cd ..'
 alias ...='cd ../..'
 
-alias docker-run='docker run -it --name dev --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/Workspace:/home/admin/Workspace  -u admin dev:v1.0   /bin/bash'
 alias docker-start='docker_dev_start dev'
 alias docker-stop='docker_dev_stop dev'
 

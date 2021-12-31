@@ -33,6 +33,7 @@ $ systemctl enable docker
 
 ```bash
 $ docker pull alpha0x1/dev:v1.0
+$ docker run -it --name dev --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/Workspace:/home/admin/Workspace  -u admin alpha0x1/dev:v1.0   /bin/bash
 ```
 
 - Or build from Dockerfile
@@ -76,3 +77,49 @@ function docker_dev_start() {
 you will have a container named `dev:v1.0` after running `docker-run` command if you pulled from the docker HUB.
 
 Then, you can use `docker-start` to enter the container, exit with `docker-stop`.
+
+
+
+## FAQ
+
+1. error while creating mount source path
+
+Make sure that the `$HOME/Workspace` and `$HOME/Downloads` exist. But if one of them is a symbolic file, you should notice that the source path  should exist.
+
+For example:
+
+```bash
+$ ls -l  $HOME
+total 32
+drwxr-xr-x  2 kgbook kgbook 4096 Dec 23 11:23 Desktop
+drwxr-xr-x  4 kgbook kgbook 4096 Dec 21 14:15 Documents
+drwxr-xr-x  7 kgbook kgbook 4096 Dec 31 09:21 Downloads
+drwxr-xr-x  2 kgbook kgbook 4096 Dec 17 20:19 Music
+drwxr-xr-x  2 kgbook kgbook 4096 Dec 21 21:04 Pictures
+drwxr-xr-x  2 kgbook kgbook 4096 Dec 17 20:19 Public
+drwxrwxr-x 13 kgbook kgbook 4096 Dec 21 17:42 Tools
+drwxr-xr-x  2 kgbook kgbook 4096 Dec 17 20:19 Videos
+lrwxrwxrwx  1 kgbook kgbook   38 Dec 20 10:06 Workspace -> /run/media/kgbook/ssd
+
+$ ls -l /run/media/kgbook/ssd/project/konka
+ls: cannot access '/run/media/kgbook/ssd': No such file or directory
+```
+
+It's easy to fix the issue using the command below:
+
+```bash
+$ sudo mkdir -p /run/media/kgbook/ssd
+$ sudo fdisk -l
+Disk /dev/sdb: 465.76 GiB, 500107862016 bytes, 976773168 sectors
+Disk model: PS300 USB3.1    
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: dos
+Disk identifier: 0xcdf05fa4
+
+Device     Boot Start       End   Sectors   Size Id Type
+/dev/sdb1        2048 976773119 976771072 465.8G 83 Linux
+$ sudo mount -t ext4 /dev/sdb1 /run/media/kgbook/ssd
+```
+
