@@ -34,8 +34,8 @@ $ systemctl enable docker
 - Pull from Docker Hub
 
 ```bash
-$ docker pull alpha0x1/dev:v1.0
-$ docker run -it --name dev --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/Workspace:/home/admin/Workspace  -u admin alpha0x1/dev:v1.0   /bin/bash
+$ docker pull alpha0x1/dev
+$ docker run -it --name dev --privileged -v $HOME/Downloads:/home/admin/Downloads -v $HOME/Workspace:/home/admin/Workspace  -u admin alpha0x1/dev   /bin/bash
 ```
 
 - Or build from Dockerfile
