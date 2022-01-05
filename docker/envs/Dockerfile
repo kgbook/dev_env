@@ -103,6 +103,8 @@ aptitude install -y \
     libgl1-mesa-dev \
     libxml2-utils \
     xsltproc \
+    libstdc++6\
+    lib32stdc++6\
     fontconfig && \ 
     aptitude clean && \
     useradd -m admin -d /home/admin -G sudo -U -s /bin/bash && \
