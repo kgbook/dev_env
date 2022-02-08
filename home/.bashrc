@@ -122,3 +122,7 @@ PROMPT_DIRTRIM=1
 #if [ $ping_result -eq 0 ]; then
 #    bingwallpaper & # update wallpaper :)
 #fi
+
+if [ -e ~/.proxyrc ]; then
+    source ~/.proxyrc
+fi
