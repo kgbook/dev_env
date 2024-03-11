@@ -6,7 +6,7 @@ After=network.target
 User=root
 Group=root
 Restart=on-abort
-ExecStart=/home/dl/tools/clash-for-linux/start.sh
+ExecStart=/home/cory/tools/clash-for-linux/start.sh
 KillMode=none
 
 [Install]

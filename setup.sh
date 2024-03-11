@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#set -e
+#set -x
+
 ### multi arch support
 read -s -p "Enter sudo Password: " sudo_passwd
 echo # Move to a new line
@@ -7,21 +11,38 @@ alias kapt="echo $sudo_passwd | sudo -S aptitude"
 alias ksystemctl="echo $sudo_passwd | sudo -S systemctl"
 alias ktee="echo $sudo_passwd | sudo -S tee"
 alias kusermod="echo $sudo_passwd | sudo -S usermod"
-alias kcp="echo $sudo_passwd | sudo -S cp"
+alias kcp="echo $sudo_passwd | sudo -S cp -rf"
 alias kmkdir="echo $sudo_passwd | sudo -S mkdir"
 alias kdpkg="echo $sudo_passwd | sudo -S dpkg"
 
 kcp etc/apt/sources.list.d/ustc.debian12.bookworm.list /etc/apt/sources.list.d/
 
 kdpkg --add-architecture i386
-kapt update
-echo "$sudo_passwd" | sudo -S apt install apt-utils aptitude
+echo "$sudo_passwd" | sudo -S apt update && sudo apt install -y apt-utils aptitude
 
 ### basic
-kapt install -y build-essential gcc g++ cmake gdb pkg-config sudo cppman man-db exfatprogs exfat-fuse ffmpeg fcitx5  fcitx5-chinese-addons fonts-wqy-microhei ntfs-3g gzip unzip unrar bzip2 tar liblz4-tool xz-utils tmux mtools  parted libudev-dev libusb-dev autoconf autotools-dev m4  libdrm-dev sed make binutils patch bc gawk perl curl wget cpio libncurses5 libssl-dev expect fakeroot diffstat texinfo uuid-dev locales pkg-config ncurses-dev gperf flex liblz4-tool time lib32ncurses-dev gnupg gcc-multilib g++-multilib x11proto-core-dev libx11-dev fontconfig libtool libudev-dev
+kapt install -y build-essential gcc g++ cmake gdb pkg-config sudo cppman man-db exfatprogs exfat-fuse ffmpeg \
+fonts-wqy-microhei ntfs-3g gzip unzip unrar bzip2 tar liblz4-tool xz-utils \
+tmux mtools  parted libudev-dev libusb-dev autoconf autotools-dev m4  libdrm-dev sed make binutils patch \
+bc gawk perl curl wget cpio libncurses5 libssl-dev expect fakeroot diffstat texinfo uuid-dev locales pkg-config \
+ncurses-dev gperf flex liblz4-tool time lib32ncurses-dev gnupg gcc-multilib g++-multilib \
+x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools
 
 ### adb
 kapt install -y adb android-sdk-platform-tools-common
+
+#### fcitx
+kapt install -y fcitx5  fcitx5-chinese-addons
+
+mkdir -p ~/.config/environment.d
+tee  ~/.config/environment.d/fcitx5.conf <<EOT
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+EOT
+
+mkdir -p ~/.config/autostart
+cp /usr/share/applications/org.fcitx.Fcitx5.desktop ~/.config/autostart/
 
 ### vlc
 kapt install -y vlc
@@ -33,11 +54,19 @@ kapt install -y v4l-utils
 kapt install -y aria2
 mkdir -p $HOME/.config/aria2
 cp -rf aria2 $HOME/.config
-sed -i "1,\$s@/home/dl@$HOME@g" aria2.conf
-sed -i "1,\$s@/home/dl@$HOME@g" script.conf
+pushd $HOME/.config/aria2
+sed -i "1,\$s@/home/dl@$HOME@g" *.conf
+popd
 aria2c_path=$(which aria2c)
-sed -i "1,\$s@/usr/bin/aria2c@$aria2c_path@g" service/aria2@.service
-kcp service/aria2@.service /lib/systemd/system
+if [[ -n ${aria2c_path} ]]; then
+  cp service/aria2@.service aria2@.service
+  sed -i "1,\$s@/usr/bin/aria2c@$aria2c_path@g" aria2@.service
+  kcp aria2@.service /lib/systemd/system/
+  rm aria2@.service
+else
+  echo "aria2 not installed ok! exit now..."
+  exit 1
+fi
 ksystemctl daemon-reload
 ksystemctl start aria2@$USER
 ksystemctl enable aria2@$USER
@@ -60,45 +89,70 @@ kapt install -y nfs-kernel-server
 #sudo nfsd restart
 # sudo showmount -e
 
-### telnet server
-kapt install -y xinetd telnetd
-ktee -a /etc/xinetd.conf > /dev/null <<EOT
-telnet stream tcp nowait telnetd /usr/sbin/tcpd /usr/sbin/in.telnetd
-defaults
-{
-  instances=60
-  log_type=SYSLOG authpriv
-  log_on_success=HOST PID
-  log_on_failure=HOST
-  cps=25 30
-}
-includedir /etc/xinetd.d
-EOT
-
-ktee -a /etc/xinetd.d/telnet > /dev/null <<EOT
-service telnet
-{
-  disable = no
-  flags = REUSE
-  socket_type = stream
-  wait = no
-  wait = no
-  server = /usr/sbin/in.telnetd
-  server = /usr/sbin/in.telnetd
-}
-EOT
-ksystemctl restart xinetd
+#### telnet server
+#kapt install -y xinetd telnetd
+#
+#function configure_xinetd() {
+#echo "xinetd configure now..."
+#ktee -a /etc/xinetd.conf > /dev/null <<EOT
+#  telnet stream tcp nowait telnetd /usr/sbin/tcpd /usr/sbin/in.telnetd
+#  defaults
+#  {
+#    instances=60
+#    log_type=SYSLOG authpriv
+#    log_on_success=HOST PID
+#    log_on_failure=HOST
+#    cps=25 30
+#  }
+#  includedir /etc/xinetd.d
+#EOT
+#}
+#
+#function configure_telnetd() {
+#  echo "xinetd telnetd now..."
+#  ktee -a /etc/xinetd.d/telnet > /dev/null <<EOT
+#  service telnet
+#  {
+#    disable = no
+#    flags = REUSE
+#    socket_type = stream
+#    wait = no
+#    server = /usr/sbin/in.telnetd
+#  }
+#EOT
+#}
+#
+#configured=$(grep xinetd /etc/xinetd.conf | wc -l)
+#if [[ ${configured} -lt 1 ]];
+#then
+#  configure_xinetd
+#fi
+#
+#configured=$(grep telnetd /etc/xinetd.d/telnet | wc -l)
+#if [[ ${configured} -lt 1 ]];
+#then
+#  configure_telnetd
+#fi
+#ksystemctl restart xinetd
 
 ### samba server
 kapt install -y samba
 echo $sudo_passwd | sudo -S smbpasswd -a $USER
-ktee -a /etc/samba/smb.conf > /dev/null <<EOT
-[$USER]
-path=$HOME/Downloads
-writable=yes
-browseable=yes
-security=share
+
+function configure_smb() {
+  ktee -a /etc/samba/smb.conf > /dev/null <<EOT
+  [$USER]
+  path=$HOME/Downloads
+  writable=yes
+  browseable=yes
+  security=share
 EOT
+}
+configured=$(grep $USER /etc/samba/smb.conf | wc -l)
+if [[ ${configured} -lt 1 ]];
+then
+  configure_smb
+fi
 
 ### samba client
 kapt install -y cifs-utils
@@ -106,8 +160,9 @@ kapt install -y cifs-utils
 
 ### ssh
 kapt install -y openssh-client
-ssh-keygen -t ecdsa
-cp home/.ssh/config ~/.ssh
+if [ ! -f ~/.ssh/id_ecdsa.pub ]; then
+  ssh-keygen -t ecdsa
+fi
 
 ### sshfs
 kapt install -y sshfs
@@ -115,23 +170,26 @@ kapt install -y sshfs
 ### docker
 
 ## for Debian / Red Hat
-curl -sSL https://get.docker.com/ | sh
+have_package=$(which docker | wc -l)
+if [ ${have_package} -lt 1 ]; then
+  curl -sSL https://get.docker.com/ | sh
+  ## for Arch Linux
+  # sudo pacman -S docker
 
-## for Arch Linux
-# sudo pacman -S docker
-
-kusermod -aG docker $USER
-kmkdir -p /etc/docker
-kcp etc/docker/daemon.json /etc/docker
-ksystemctl daemon-reload
-ksystemctl enable docker
-#ksystemctl restart docker
-#docker/docker_action.sh  build
+  kusermod -aG docker $USER
+  kmkdir -p /etc/docker
+  kcp etc/docker/daemon.json /etc/docker
+  ksystemctl daemon-reload
+  ksystemctl enable docker
+  #ksystemctl restart docker
+  #docker/docker_action.sh  build
+fi
 
 ### bash
 echo $sudo_passwd | sudo -S chsh -s /usr/bin/bash
 cp home/.bash_aliases ~/
 cp home/.bashrc ~/
+cp home/.proxyrc ~/
 
 ### vim
 kapt install -y vim
@@ -143,7 +201,9 @@ cp home/.gitconfig ~/
 
 ## subversion
 kapt install -y subversion
-sed -i  "/^# store-passwords/c\store-passwords = yes"  ~/.subversion/servers
+if [ -d ~/.subversion ]; then
+  sed -i  "/^# store-passwords/c\store-passwords = yes"  ~/.subversion/servers
+fi
 
 ### minicom
 kapt install -y minicom
@@ -151,7 +211,7 @@ cp home/.minirc.dfl ~/
 
 
 kusermod -aG dialout $USER
-ksudo usermod -aG plugdev $USER
+kusermod -aG plugdev $USER
 
 ## tmux
 kapt install -y tmux
@@ -174,4 +234,44 @@ echo "export PATH=\$PATH:$repo_path" >> ~/.bashrc
 echo 'export REPO_URL="https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/"' >> ~/.bashrc
 
 ## clash
-sed -i "1,\$s@/home/dl@$HOME@g" service/clash@.service
+cp service/clash@.service clash@.service
+sed -i "1,\$s@/home/dl@$HOME@g" clash@.service
+kcp clash@.service /lib/systemd/system
+rm -f clash@.service
+ksystemctl daemon-reload
+
+## github gh
+function install_gh() {
+  echo "install github gh now ..."
+  echo $sudo_passwd | mkdir -p -m 755 /etc/apt/keyrings && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+  && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+  && sudo apt update \
+  && sudo apt install gh -y
+}
+
+have_package=$(which gh | wc -l)
+if [ ${have_package} -lt 1 ]; then
+    install_gh
+fi
+
+## telegram
+kapt install -y telegram-desktop
+
+## flameshot
+kapt install -y flameshot
+
+## nvidia driver
+kapt install -y nvidia-detect
+use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
+if [ ${use_nvidia_driver} -gt 0 ]; then
+  kapt install -y nvidia-driver
+fi
+nouveau_conf="/etc/modprobe.d/blacklist-nouveau.conf"
+if [ ! -f ${nouveau_conf} ]; then
+    echo ${sudo_passwd} | sudo -S touch ${nouveau_conf}
+    ktee ${nouveau_conf} <<EOT
+    blacklist nouveau
+    options nouveau modeset=0
+EOT
+fi
