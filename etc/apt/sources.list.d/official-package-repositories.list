@@ -1,8 +1,0 @@
-deb http://mirrors.ustc.edu.cn/linuxmint ulyana main upstream import backport 
-
-deb http://mirrors.aliyun.com/ubuntu focal main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu focal-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu focal-backports main restricted universe multiverse
-
-deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
-deb http://archive.canonical.com/ubuntu/ focal partner

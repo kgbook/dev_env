@@ -1,0 +1,11 @@
+[Unit]
+    Description=Aria2 Service for %i.
+    After=network.target
+
+[Service]
+    #PIDFile=/run/aria2.pid
+    User=%i
+    ExecStart=/usr/bin/aria2c -c --conf-path=/home/%i/.config/aria2/aria2.conf # 注意使用自己的路径和文件名
+
+[Install]
+    WantedBy=multi-user.target

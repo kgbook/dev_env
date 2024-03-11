@@ -27,6 +27,6 @@
 [credential]
     helper = store
  [http "https://github.com"]
-     proxy = socks5://127.0.0.1:1080
+     proxy = socks5://127.0.0.1:7890
  [https "https://github.com"]
-     proxy = socks5://127.0.0.1:1080
+     proxy = socks5://127.0.0.1:7890
