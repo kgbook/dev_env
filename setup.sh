@@ -26,7 +26,20 @@ fonts-wqy-microhei ntfs-3g gzip unzip unrar bzip2 tar liblz4-tool xz-utils \
 tmux mtools  parted libudev-dev libusb-dev autoconf autotools-dev m4  libdrm-dev sed make binutils patch \
 bc gawk perl curl wget cpio libncurses5 libssl-dev expect fakeroot diffstat texinfo uuid-dev locales pkg-config \
 ncurses-dev gperf flex liblz4-tool time lib32ncurses-dev gnupg gcc-multilib g++-multilib \
-x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools
+x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools top htop iotop
+
+## firewall
+kapt install -y ufw
+ufw_path=$(whereis ufw)
+alias ufw_exe="echo $sudo_passwd | sudo -S ${ufw_path}"
+ufw_exe enable
+ufw_exe allow ssh
+ufw_exe allow http
+ufw_exe allow https
+ufw_exe allow ftp
+ufw_exe allow nfs
+ufw_exe default deny
+ufw_exe status verbose
 
 ### adb
 kapt install -y adb android-sdk-platform-tools-common
@@ -260,6 +273,14 @@ kapt install -y telegram-desktop
 
 ## flameshot
 kapt install -y flameshot
+
+## klogg, install from source code
+kapt install -y libboost-all-dev ragel libpcap-dev qtbase5-dev qttools5-dev
+git clone https://github.com/variar/klogg.git
+pushd klogg
+mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build .
+popd
+
 
 ## nvidia driver
 kapt install -y nvidia-detect
