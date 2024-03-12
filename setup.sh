@@ -3,6 +3,8 @@
 #set -e
 #set -x
 
+tool_path=$HOME/tools
+
 ### multi arch support
 read -s -p "Enter sudo Password: " sudo_passwd
 echo # Move to a new line
@@ -16,6 +18,7 @@ alias kmkdir="echo $sudo_passwd | sudo -S mkdir"
 alias kdpkg="echo $sudo_passwd | sudo -S dpkg"
 
 kcp etc/apt/sources.list.d/ustc.debian12.bookworm.list /etc/apt/sources.list.d/
+mkdir -p ${tool_path}
 
 kdpkg --add-architecture i386
 echo "$sudo_passwd" | sudo -S apt update && sudo apt install -y apt-utils aptitude
@@ -56,12 +59,6 @@ EOT
 
 mkdir -p ~/.config/autostart
 cp /usr/share/applications/org.fcitx.Fcitx5.desktop ~/.config/autostart/
-
-### vlc
-kapt install -y vlc
-
-### v4l2
-kapt install -y v4l-utils
 
 ### aria2
 kapt install -y aria2
@@ -238,6 +235,18 @@ kapt install apt-transport-https
 kapt update
 kapt install code # or code-insiders
 
+## telegram
+kapt install -y telegram-desktop
+
+## flameshot
+kapt install -y flameshot
+
+### vlc
+kapt install -y vlc
+
+### v4l2
+kapt install -y v4l-utils
+
 ## repo
 repo_path=~/tools/repo
 mkdir -p $repo_path
@@ -268,19 +277,23 @@ if [ ${have_package} -lt 1 ]; then
     install_gh
 fi
 
-## telegram
-kapt install -y telegram-desktop
-
-## flameshot
-kapt install -y flameshot
-
 ## klogg, install from source code
 kapt install -y libboost-all-dev ragel libpcap-dev qtbase5-dev qttools5-dev
 git clone https://github.com/variar/klogg.git
 pushd klogg
-mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build .
+mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build . && \
+echo "export PATH=${tool_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
+echo "install klogg ok!"
 popd
 
+#### YUView
+kapt install -y yuview
+#git clone https://github.com/IENT/YUView.git ${tool_path}/YUView
+#mkdir -p ${tool_path}/YUView/build
+#pushd ${tool_path}/YUView/build
+#qmake ../YUView.pro && make -j 8 && echo "export PATH=${tool_path}/YUView/build/YUViewApp:\$PATH" >> ~/.bashrc &&\
+#echo "install YUView ok!"
+#popd
 
 ## nvidia driver
 kapt install -y nvidia-detect
