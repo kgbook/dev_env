@@ -247,6 +247,12 @@ kapt install -y vlc
 ### v4l2
 kapt install -y v4l-utils
 
+### imagej
+kapt install -y imagej
+
+#### YUView
+kapt install -y yuview
+
 ## repo
 repo_path=~/tools/repo
 mkdir -p $repo_path
@@ -285,15 +291,6 @@ mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build . && 
 echo "export PATH=${tool_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
 echo "install klogg ok!"
 popd
-
-#### YUView
-kapt install -y yuview
-#git clone https://github.com/IENT/YUView.git ${tool_path}/YUView
-#mkdir -p ${tool_path}/YUView/build
-#pushd ${tool_path}/YUView/build
-#qmake ../YUView.pro && make -j 8 && echo "export PATH=${tool_path}/YUView/build/YUViewApp:\$PATH" >> ~/.bashrc &&\
-#echo "install YUView ok!"
-#popd
 
 ## nvidia driver
 kapt install -y nvidia-detect
