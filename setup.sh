@@ -288,12 +288,34 @@ fi
 
 ## klogg, install from source code
 kapt install -y libboost-all-dev ragel libpcap-dev qtbase5-dev qttools5-dev
-git clone https://github.com/variar/klogg.git
-pushd klogg
+klogg_path=${tool_path}/klogg
+git clone https://github.com/variar/klogg.git ${klogg_path}
+pushd ${klogg_path}
 mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build . && \
-echo "export PATH=${tool_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
+echo "export PATH=${klogg_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
 echo "install klogg ok!"
 popd
+
+## wps and windows fonts
+ms_ttf_font_path=${tool_path}/ttf-ms-win10
+wps_font_path=${tool_path}/wps-fonts
+font_install_path=$HOME/.fonts
+git clone https://gitee.com/atomlong/ttf-ms-win10.git ${ms_ttf_font_path}
+git clone https://github.com/gasharper/linux-fonts.git ${wps_font_path}
+pushd ${ms_ttf_font_path}
+mv *.ttc  ${font_install_path}
+mv *.ttf  ${font_install_path}
+popd
+pushd ${wps_font_path}
+mv *.ttc  ${font_install_path}
+mv *.ttf  ${font_install_path}
+popd
+pushd ${font_install_path}
+echo $sudo_passwd | sudo -S fc-cache -fv # for all users
+popd
+rm -rf ${ms_ttf_font_path}
+rm -rf ${wps_font_path}
+
 
 ## nvidia driver
 kapt install -y nvidia-detect
