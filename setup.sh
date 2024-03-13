@@ -256,6 +256,9 @@ kapt install -y imagej
 #### YUView
 kapt install -y yuview
 
+### mediainfo
+kapt install mediainfo mediainfo-gui
+
 ## repo
 repo_path=~/tools/repo
 mkdir -p $repo_path
