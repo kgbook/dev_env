@@ -33,14 +33,17 @@ x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools top htop i
 
 ## firewall
 kapt install -y ufw
-ufw_path=$(whereis ufw)
-alias ufw_exe="echo $sudo_passwd | sudo -S ${ufw_path}"
+alias ufw_exe="echo $sudo_passwd | sudo -S ufw"
+alias iptables_exe="echo $sudo_passwd | sudo -S iptables"
 ufw_exe enable
 ufw_exe allow ssh
 ufw_exe allow http
 ufw_exe allow https
 ufw_exe allow ftp
 ufw_exe allow nfs
+ufw_exe allow in proto udp from any to 224.0.0.251 port 5353
+ufw_exe allow out proto udp to 224.0.0.251 port 5353
+iptables_exe -I INPUT 1 -p igmp -j ACCEPT
 ufw_exe default deny
 ufw_exe status verbose
 
