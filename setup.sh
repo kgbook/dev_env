@@ -31,6 +31,11 @@ bc gawk perl curl wget cpio libncurses5 libssl-dev expect fakeroot diffstat texi
 ncurses-dev gperf flex liblz4-tool time lib32ncurses-dev gnupg gcc-multilib g++-multilib \
 x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools top htop iotop
 
+### atzlinux mirrors
+wget -c -O atzlinux-v12-archive-keyring_lastest_all.deb https://www.atzlinux.com/atzlinux/pool/main/a/atzlinux-archive-keyring/atzlinux-v12-archive-keyring_lastest_all.deb
+kdpkg -i atzlinux-v12-archive-keyring_lastest_all.deb
+echo "$sudo_passwd" | sudo -S apt update
+
 ## firewall
 kapt install -y ufw
 alias ufw_exe="echo $sudo_passwd | sudo -S ufw"
@@ -300,31 +305,7 @@ echo "install klogg ok!"
 popd
 
 ## install wps
-wps_path=${tool_path}/wps-office.deb
-wget https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11719/wps-office_11.1.0.11719.XA_amd64.deb -O ${wps_path}
-kdpkg -i ${wps_path}
-rm ${wps_path}
-
-## wps and windows fonts
-ms_ttf_font_path=${tool_path}/ttf-ms-win10
-wps_font_path=${tool_path}/wps-fonts
-font_install_path=$HOME/.fonts
-git clone https://gitee.com/atomlong/ttf-ms-win10.git ${ms_ttf_font_path}
-git clone https://github.com/gasharper/linux-fonts.git ${wps_font_path}
-pushd ${ms_ttf_font_path}
-mv *.ttc  ${font_install_path}
-mv *.ttf  ${font_install_path}
-popd
-pushd ${wps_font_path}
-mv *.ttc  ${font_install_path}
-mv *.ttf  ${font_install_path}
-popd
-pushd ${font_install_path}
-echo $sudo_passwd | sudo -S fc-cache -fv # for all users
-popd
-rm -rf ${ms_ttf_font_path}
-rm -rf ${wps_font_path}
-
+kapt install -y wps-office wps-office-fonts ttf-mscorefonts-atzlinux fonts-adobe-source-han-cn libtiff5
 
 ## nvidia driver
 kapt install -y nvidia-detect
