@@ -299,6 +299,12 @@ echo "export PATH=${klogg_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
 echo "install klogg ok!"
 popd
 
+## install wps
+wps_path=${tool_path}/wps-office.deb
+wget https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11719/wps-office_11.1.0.11719.XA_amd64.deb -O ${wps_path}
+kdpkg -i ${wps_path}
+rm ${wps_path}
+
 ## wps and windows fonts
 ms_ttf_font_path=${tool_path}/ttf-ms-win10
 wps_font_path=${tool_path}/wps-fonts
