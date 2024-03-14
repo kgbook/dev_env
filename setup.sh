@@ -307,6 +307,19 @@ popd
 ## install wps
 kapt install -y wps-office wps-office-fonts ttf-mscorefonts-atzlinux fonts-adobe-source-han-cn libtiff5
 
+### install miniconda
+wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda-latest.sh
+bash miniconda-latest.sh
+rm miniconda-latest.sh
+
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+
+### install python2 and python3
+conda create -n python2 python=2.7
+conda create -n python3 python=3.6
+
 ## nvidia driver
 kapt install -y nvidia-detect
 use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
