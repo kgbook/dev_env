@@ -4,7 +4,7 @@
 #set -x
 
 tool_path=$HOME/tools
-linux_wechat_url=https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.wechat/com.tencent.wechat_1.0.0.236_amd64.deb
+linux_wechat_url=https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.wechat/com.tencent.wechat_1.0.0.238_amd64.deb
 
 ### multi arch support
 read -s -p "Enter sudo Password: " sudo_passwd
