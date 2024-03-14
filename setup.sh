@@ -4,6 +4,7 @@
 #set -x
 
 tool_path=$HOME/tools
+linux_wechat_url=https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.wechat/com.tencent.wechat_1.0.0.236_amd64.deb
 
 ### multi arch support
 read -s -p "Enter sudo Password: " sudo_passwd
@@ -319,6 +320,13 @@ conda config --set show_channel_urls yes
 ### install python2 and python3
 conda create -n python2 python=2.7
 conda create -n python3 python=3.6
+
+## install linux wechat
+echo $sudo_passwd | sudo -S wget -O- https://deepin-wine.i-m.dev/setup.sh | sh
+kapt install -y deepin-elf-verify
+echo $sudo_passwd | sudo -S apt --fix-broken install
+wget $linux_wechat_url -O wechat.deb
+kdpkg -i wechat.deb
 
 ## nvidia driver
 kapt install -y nvidia-detect
