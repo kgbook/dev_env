@@ -49,7 +49,8 @@ ufw_exe allow ftp
 ufw_exe allow nfs
 ufw_exe allow in proto udp from any to 224.0.0.251 port 5353
 ufw_exe allow out proto udp to 224.0.0.251 port 5353
-iptables_exe -I INPUT 1 -p igmp -j ACCEPT
+ufw_exe allow proto igmp from any to 224.0.0.1
+ufw_exe allow proto igmp from any to 224.0.0.251
 ufw_exe default deny
 ufw_exe status verbose
 
