@@ -35,7 +35,15 @@ x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools top htop i
 ### atzlinux mirrors
 wget -c -O atzlinux-v12-archive-keyring_lastest_all.deb https://www.atzlinux.com/atzlinux/pool/main/a/atzlinux-archive-keyring/atzlinux-v12-archive-keyring_lastest_all.deb
 kdpkg -i atzlinux-v12-archive-keyring_lastest_all.deb
+
+### microsoft edge mirrors
+
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+echo $sudo_passwd | sudo -S install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
+rm -f packages.microsoft.gpg
 echo "$sudo_passwd" | sudo -S apt update
+kapt install microsoft-edge-stable
 
 ## firewall
 kapt install -y ufw
