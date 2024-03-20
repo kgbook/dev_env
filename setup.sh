@@ -367,6 +367,9 @@ tee $HOME/.pam_environment > /dev/null <<EOT
   LC_MONETARY=DEFAULT=en_US.UTF-8
 EOT
 
+echo "### language" >> ~/.bashrc
+echo "export LANGUAGE=en_US" >> ~/.bashrc
+
 ### spotify
 curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo -S gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
 echo "deb http://repository.spotify.com stable non-free" | ktee /etc/apt/sources.list.d/spotify.list
