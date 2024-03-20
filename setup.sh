@@ -342,15 +342,27 @@ kdpkg -i wechat.deb
 
 ## nvidia driver
 kapt install -y nvidia-detect
-use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
-if [ ${use_nvidia_driver} -gt 0 ]; then
-  kapt install -y nvidia-driver
-fi
-nouveau_conf="/etc/modprobe.d/blacklist-nouveau.conf"
-if [ ! -f ${nouveau_conf} ]; then
-    echo ${sudo_passwd} | sudo -S touch ${nouveau_conf}
-    ktee ${nouveau_conf} <<EOT
-    blacklist nouveau
-    options nouveau modeset=0
+#use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
+#if [ ${use_nvidia_driver} -gt 0 ]; then
+#  kapt install -y nvidia-driver
+#fi
+#nouveau_conf="/etc/modprobe.d/blacklist-nouveau.conf"
+#if [ ! -f ${nouveau_conf} ]; then
+#    echo ${sudo_passwd} | sudo -S touch ${nouveau_conf}
+#    ktee ${nouveau_conf} <<EOT
+#    blacklist nouveau
+#    options nouveau modeset=0
+#EOT
+#fi
+
+### pam_environment
+tee $HOME/.pam_environment > /dev/null <<EOT
+  LANG=DEFAULT=en_US.UTF-8
+  LANGUAGE=DEFAULT=en_US:en
+  LC_CTYPE=DEFAULT=zh_CN.UTF-8
+  LC_MESSAGES=DEFAULT=en_US.UTF-8
+  LC_COLLATE=DEFAULT=en_US.UTF-8
+  LC_NUMERIC=DEFAULT=en_US.UTF-8
+  LC_TIME=DEFAULT=en_US.UTF-8
+  LC_MONETARY=DEFAULT=en_US.UTF-8
 EOT
-fi
