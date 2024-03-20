@@ -307,12 +307,15 @@ fi
 ## klogg, install from source code
 kapt install -y libboost-all-dev ragel libpcap-dev qtbase5-dev qttools5-dev
 klogg_path=${tool_path}/klogg
-git clone https://github.com/variar/klogg.git ${klogg_path}
-pushd ${klogg_path}
-mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build . && \
-echo "export PATH=${klogg_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
-echo "install klogg ok!"
-popd
+
+if [[ ! -d $klogg_path ]]; then
+  git clone https://github.com/variar/klogg.git ${klogg_path}
+  pushd ${klogg_path}
+  mkdir build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && cmake --build . && \
+  echo "export PATH=${klogg_path}/klogg/build/output:\$PATH" >> ~/.bashrc && \
+  echo "install klogg ok!"
+  popd
+fi
 
 ## install wps
 kapt install -y wps-office wps-office-fonts ttf-mscorefonts-atzlinux fonts-adobe-source-han-cn libtiff5
