@@ -357,14 +357,14 @@ kapt install -y nvidia-detect
 
 ### pam_environment
 tee $HOME/.pam_environment > /dev/null <<EOT
-  LANG=DEFAULT=en_US.UTF-8
-  LANGUAGE=DEFAULT=en_US:en
-  LC_CTYPE=DEFAULT=zh_CN.UTF-8
-  LC_MESSAGES=DEFAULT=en_US.UTF-8
-  LC_COLLATE=DEFAULT=en_US.UTF-8
-  LC_NUMERIC=DEFAULT=en_US.UTF-8
-  LC_TIME=DEFAULT=en_US.UTF-8
-  LC_MONETARY=DEFAULT=en_US.UTF-8
+  LANG=en_US.UTF-8
+  LANGUAGE=en_US:en
+  LC_CTYPE=zh_CN.UTF-8
+  LC_MESSAGES=en_US.UTF-8
+  LC_COLLATE=en_US.UTF-8
+  LC_NUMERIC=en_US.UTF-8
+  LC_TIME=en_US.UTF-8
+  LC_MONETARY=en_US.UTF-8
 EOT
 
 echo "### language" >> ~/.bashrc
