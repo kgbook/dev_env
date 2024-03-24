@@ -380,3 +380,8 @@ sudo -S apt update && sudo -S apt install -y spotify-client
 
 ### Rust
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+
+### thuner
+wget https://mirrors.sdu.edu.cn/spark-store-repository/store//network/com.xunlei.download/com.xunlei.download_1.0.0.3spark2_amd64.deb -O com.xunlei.download.deb
+kdpkg -i com.xunlei.download.deb
+rm -f com.xunlei.download.deb
