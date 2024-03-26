@@ -330,11 +330,13 @@ rm miniconda-latest.sh
 
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 conda config --set show_channel_urls yes
 
 ### install python2 and python3
 conda create -n python2 python=2.7
-conda create -n python3 python=3.6
+conda create -n python3 python=3.7
 
 ## install linux wechat
 echo $sudo_passwd | sudo -S wget -O- https://deepin-wine.i-m.dev/setup.sh | sh
