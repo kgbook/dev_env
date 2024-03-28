@@ -216,6 +216,13 @@ if [ ${have_package} -lt 1 ]; then
   #docker/docker_action.sh  build
 fi
 
+### add docker compose
+if [[ ! -f /usr/bin/docker-compose ]]; then
+  echo $sudo_passwd | sudo -S curl -SL https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+  echo $sudo_passwd | sudo -S ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  echo $sudo_passwd | sudo -S chmod +x $USER /usr/local/bin/docker-compose
+fi
+
 ### bash
 echo $sudo_passwd | sudo -S chsh -s /usr/bin/bash
 cp home/.bash_aliases ~/
