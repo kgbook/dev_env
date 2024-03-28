@@ -212,6 +212,7 @@ if [ ${have_package} -lt 1 ]; then
   kcp etc/docker/daemon.json /etc/docker
   ksystemctl daemon-reload
   ksystemctl enable docker
+  echo $sudo_passwd | sudo -S usermod -aG docker ${USER}
   #ksystemctl restart docker
   #docker/docker_action.sh  build
 fi
