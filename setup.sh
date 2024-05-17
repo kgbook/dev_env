@@ -327,18 +327,18 @@ kapt install -y maven
 kapt install -y wps-office wps-office-fonts ttf-mscorefonts-atzlinux fonts-adobe-source-han-cn libtiff5
 
 ### install miniconda
-wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda-latest.sh
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda-latest.sh
 bash miniconda-latest.sh
 rm miniconda-latest.sh
 
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-conda config --set show_channel_urls yes
-
-### install python2 and python3
-conda create -n python2 python=2.7
+#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+#conda config --set show_channel_urls yes
+#
+#### install python2 and python3
+#conda create -n python2 python=2.7
 conda create -n python3 python=3.11.2
 
 ## install linux wechat
