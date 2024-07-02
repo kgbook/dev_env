@@ -72,18 +72,44 @@ EOT
 mkdir -p ~/.config/autostart
 cp /usr/share/applications/org.fcitx.Fcitx5.desktop ~/.config/autostart/
 
+### beyond compare
+wget https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb -O bcompre.deb
+echo $sudo_passwd | sudo -S dpkg -i bcompre.deb
+rm bcompre.deb
+
+## chrome
+wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O chrome.deb
+echo $sudo_passwd | sudo -S dpkg -i chrome.deb
+rm chrome.deb
+echo $sudo_passwd | sudo -S apt install --fix-broken -y
+
 ### aria2
 echo $sudo_passwd | sudo -S aptitude install -y aria2
-cp -rf HOME/.config/aria2 $HOME/.config
-pushd $HOME/.config/aria2
-sed -i "1,\$s@/home/dl@$HOME@g" *.conf
+pushd home/.config/aria2
+sed -i "/^dir=/c\\dir=${HOME}/Downloads" aria2.browser.conf
+sed -i "/^input-file=/c\\input-file=${HOME}/.config/aria2/aria2.session" aria2.browser.conf
+sed -i "/^save-session=/c\\save-session=${HOME}/.config/aria2/aria2.session" aria2.browser.conf
+sed -i "/^dht-file-path=/c\\dht-file-path=${HOME}/.config/aria2/dht.dat" aria2.browser.conf
+sed -i "/^dht-file-path6=/c\\dht-file-path6=${HOME}/.config/aria2/dht.dat" aria2.browser.conf
+sed -i "/^on-download-stop=/c\\on-download-stop=${HOME}/.config/aria2/delete.sh" aria2.browser.conf
+sed -i "/^on-download-complete=/c\\on-download-complete=${HOME}/.config/aria2/clean.sh" aria2.browser.conf
+cp aria2.browser.conf aria2.yt-dlp.conf
+sed -i "/^rpc-listen-port=/c\\rpc-listen-port=6800" aria2.browser.conf
+sed -i "/^rpc-listen-port=/c\\rpc-listen-port=6801" aria2.yt-dlp.conf
+sed -i "/^dest-dir=/c\\dest-dir=${HOME}Downloads/completed" script.conf
 popd
-echo $sudo_passwd | sudo -S cp -rf service/*.service /lib/systemd/system/
-echo $sudo_passwd | sudo -S systemctl daemon-reload
-echo $sudo_passwd | sudo -S systemctl start aria2_yt-dlp@$USER
-echo $sudo_passwd | sudo -S systemctl start aria2_browser@$USER
-echo $sudo_passwd | sudo -S systemctl enable aria2_yt-dlp@$USER
-echo $sudo_passwd | sudo -S systemctl enable aria2_browser@$USER
+
+cp -rf home/.config/aria2 $HOME/.config
+if [ -d "$HOME/.config/aria2" ]; then
+  echo $sudo_passwd | sudo -S cp -rf service/*.service /lib/systemd/system/
+  echo $sudo_passwd | sudo -S systemctl daemon-reload
+  echo $sudo_passwd | sudo -S systemctl start aria2_yt-dlp@$USER
+  echo $sudo_passwd | sudo -S systemctl start aria2_browser@$USER
+  echo $sudo_passwd | sudo -S systemctl enable aria2_yt-dlp@$USER
+  echo $sudo_passwd | sudo -S systemctl enable aria2_browser@$USER
+else
+  echo "No ${HOME}/.config directory"!!!
+fi
 
 ### guvcview
 echo $sudo_passwd | sudo -S aptitude install -y guvcview
