@@ -357,7 +357,7 @@ echo "export LANGUAGE=en_US" >> ~/.bashrc
 
 ### spotify
 curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo -S gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-echo "deb http://repository.spotify.com stable non-free" | echo $sudo_passwd | sudo -S tee /etc/apt/sources.list.d/spotify.list
+echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
 sudo -S apt update && sudo -S apt install -y spotify-client
 
 ### Rust
