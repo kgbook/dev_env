@@ -308,12 +308,12 @@ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O mi
 bash miniconda-latest.sh
 rm miniconda-latest.sh
 
-#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
-#conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-#conda config --set show_channel_urls yes
-#
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+conda config --set show_channel_urls yes
+
 #### install python2 and python3
 #conda create -n python2 python=2.7
 conda create -n python3 python=3.11.2
@@ -327,18 +327,18 @@ echo $sudo_passwd | sudo -S dpkg -i wechat.deb
 
 ## nvidia driver
 echo $sudo_passwd | sudo -S aptitude install -y nvidia-detect
-#use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
-#if [ ${use_nvidia_driver} -gt 0 ]; then
-#  echo $sudo_passwd | sudo -S aptitude install -y nvidia-driver
-#fi
-#nouveau_conf="/etc/modprobe.d/blacklist-nouveau.conf"
-#if [ ! -f ${nouveau_conf} ]; then
-#    echo ${sudo_passwd} | sudo -S touch ${nouveau_conf}
-#    echo $sudo_passwd | sudo -S tee ${nouveau_conf} <<EOT
-#    blacklist nouveau
-#    options nouveau modeset=0
-#EOT
-#fi
+use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
+if [ ${use_nvidia_driver} -gt 0 ]; then
+  echo $sudo_passwd | sudo -S aptitude install -y nvidia-driver
+fi
+nouveau_conf="/etc/modprobe.d/blacklist-nouveau.conf"
+if [ ! -f ${nouveau_conf} ]; then
+    echo ${sudo_passwd} | sudo -S touch ${nouveau_conf}
+    echo $sudo_passwd | sudo -S tee ${nouveau_conf} <<EOT
+    blacklist nouveau
+    options nouveau modeset=0
+EOT
+fi
 
 ### pam_environment
 tee -a $HOME/.pam_environment > /dev/null <<EOT
@@ -367,3 +367,12 @@ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 wget https://mirrors.sdu.edu.cn/spark-store-repository/store//network/com.xunlei.download/com.xunlei.download_1.0.0.3spark2_amd64.deb -O com.xunlei.download.deb
 echo $sudo_passwd | sudo -S dpkg -i com.xunlei.download.deb
 rm -f com.xunlei.download.deb
+
+### disbale kernel upgrade, nvidia driver will not work on some machine if upgraded to the latest
+kernel_version=$(uname -r)
+linux_image_version=linux-image-$kernel_version
+linux_headers_version=linux-headers-$kernel_version
+linux_modules_version=linux-modules-$kernel_version
+echo $sudo_passwd | sudo -S apt-mark hold $linux_image_version
+echo $sudo_passwd | sudo -S apt-mark hold $linux_headers_version
+echo $sudo_passwd | sudo -S apt-mark hold $linux_modules_version
