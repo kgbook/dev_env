@@ -356,7 +356,9 @@ wget $linux_wechat_url -O wechat.deb
 echo $sudo_passwd | sudo -S dpkg -i wechat.deb
 
 ### install linux qq
-
+wget https://dldir1.qq.com/qqfile/qq/QQNT/Linux/QQ_3.2.9_240617_amd64_01.deb -O qq.deb
+echo $sudo_passwd | sudo -S dpkg -i qq.deb
+rm qq.deb
 
 ## nvidia driver
 echo $sudo_passwd | sudo -S aptitude install -y nvidia-detect
