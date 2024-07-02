@@ -31,7 +31,6 @@ echo $sudo_passwd | sudo -S dpkg -i atzlinux-v12-archive-keyring_lastest_all.deb
 rm -rf atzlinux-v12-archive-keyring_lastest_all.deb
 
 ### microsoft edge mirrors
-
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 echo $sudo_passwd | sudo -S install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
 sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
@@ -104,51 +103,51 @@ echo $sudo_passwd | sudo -S aptitude install -y nfs-kernel-server
 #sudo nfsd restart
 # sudo showmount -e
 
-#### telnet server
-#echo $sudo_passwd | sudo -S aptitude install -y xinetd telnetd
-#
-#function configure_xinetd() {
-#echo "xinetd configure now..."
-#echo $sudo_passwd | sudo -S tee -a /etc/xinetd.conf > /dev/null <<EOT
-#  telnet stream tcp nowait telnetd /usr/sbin/tcpd /usr/sbin/in.telnetd
-#  defaults
-#  {
-#    instances=60
-#    log_type=SYSLOG authpriv
-#    log_on_success=HOST PID
-#    log_on_failure=HOST
-#    cps=25 30
-#  }
-#  includedir /etc/xinetd.d
-#EOT
-#}
-#
-#function configure_telnetd() {
-#  echo "xinetd telnetd now..."
-#  echo $sudo_passwd | sudo -S tee -a /etc/xinetd.d/telnet > /dev/null <<EOT
-#  service telnet
-#  {
-#    disable = no
-#    flags = REUSE
-#    socket_type = stream
-#    wait = no
-#    server = /usr/sbin/in.telnetd
-#  }
-#EOT
-#}
-#
-#configured=$(grep xinetd /etc/xinetd.conf | wc -l)
-#if [[ ${configured} -lt 1 ]];
-#then
-#  configure_xinetd
-#fi
-#
-#configured=$(grep telnetd /etc/xinetd.d/telnet | wc -l)
-#if [[ ${configured} -lt 1 ]];
-#then
-#  configure_telnetd
-#fi
-#echo $sudo_passwd | sudo -S systemctl restart xinetd
+### telnet server
+echo $sudo_passwd | sudo -S aptitude install -y xinetd telnetd
+
+function configure_xinetd() {
+echo "xinetd configure now..."
+echo $sudo_passwd | sudo -S tee -a /etc/xinetd.conf > /dev/null <<EOT
+  telnet stream tcp nowait telnetd /usr/sbin/tcpd /usr/sbin/in.telnetd
+  defaults
+  {
+    instances=60
+    log_type=SYSLOG authpriv
+    log_on_success=HOST PID
+    log_on_failure=HOST
+    cps=25 30
+  }
+  includedir /etc/xinetd.d
+EOT
+}
+
+function configure_telnetd() {
+  echo "xinetd telnetd now..."
+  echo $sudo_passwd | sudo -S tee -a /etc/xinetd.d/telnet > /dev/null <<EOT
+  service telnet
+  {
+    disable = no
+    flags = REUSE
+    socket_type = stream
+    wait = no
+    server = /usr/sbin/in.telnetd
+  }
+EOT
+}
+
+configured=$(grep xinetd /etc/xinetd.conf | wc -l)
+if [[ ${configured} -lt 1 ]];
+then
+  configure_xinetd
+fi
+
+configured=$(grep telnetd /etc/xinetd.d/telnet | wc -l)
+if [[ ${configured} -lt 1 ]];
+then
+  configure_telnetd
+fi
+echo $sudo_passwd | sudo -S systemctl restart xinetd
 
 ### samba server
 echo $sudo_passwd | sudo -S aptitude install -y samba
@@ -267,7 +266,12 @@ echo $sudo_passwd | sudo -S aptitude install -y imagej
 echo $sudo_passwd | sudo -S aptitude install -y yuview
 
 ### mediainfo
-echo $sudo_passwd | sudo -S aptitude install mediainfo mediainfo-gui
+echo $sudo_passwd | sudo -S aptitude install -y mediainfo mediainfo-gui
+
+## android studio for platform
+wget https://dl.google.com/android/asfp/asfp-2023.2.1.20-linux.deb -O asfp.deb
+echo $sudo_passwd | sudo -S dpkg -i asfp.deb
+rm asfp.deb
 
 ## repo
 repo_path=~/tools/repo
@@ -324,6 +328,9 @@ echo $sudo_passwd | sudo -S aptitude install -y deepin-elf-verify
 echo $sudo_passwd | sudo -S apt --fix-broken install
 wget $linux_wechat_url -O wechat.deb
 echo $sudo_passwd | sudo -S dpkg -i wechat.deb
+
+### install linux qq
+
 
 ## nvidia driver
 echo $sudo_passwd | sudo -S aptitude install -y nvidia-detect
