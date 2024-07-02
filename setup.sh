@@ -354,6 +354,8 @@ echo $sudo_passwd | sudo -S aptitude install -y deepin-elf-verify
 echo $sudo_passwd | sudo -S apt --fix-broken install
 wget $linux_wechat_url -O wechat.deb
 echo $sudo_passwd | sudo -S dpkg -i wechat.deb
+rm wechat.deb
+ln -sf /opt/apps/com.tencent.wechat/entries/applications/com.tencent.wechat.desktop $HOME/Desktop/com.tencent.wechat.desktop
 
 ### install linux qq
 wget https://dldir1.qq.com/qqfile/qq/QQNT/Linux/QQ_3.2.9_240617_amd64_01.deb -O qq.deb
