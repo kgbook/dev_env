@@ -23,11 +23,12 @@ fonts-wqy-microhei ntfs-3g gzip unzip unrar bzip2 tar liblz4-tool xz-utils \
 tmux mtools  parted libudev-dev libusb-dev autoconf autotools-dev m4  libdrm-dev sed make binutils patch \
 bc gawk perl curl wget cpio libncurses5 libssl-dev expect fakeroot diffstat texinfo uuid-dev locales pkg-config \
 ncurses-dev gperf flex liblz4-tool time lib32ncurses-dev gnupg gcc-multilib g++-multilib \
-x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools top htop iotop
+x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools  htop iotop
 
 ### atzlinux mirrors
 wget -c -O atzlinux-v12-archive-keyring_lastest_all.deb https://www.atzlinux.com/atzlinux/pool/main/a/atzlinux-archive-keyring/atzlinux-v12-archive-keyring_lastest_all.deb
 echo $sudo_passwd | sudo -S dpkg -i atzlinux-v12-archive-keyring_lastest_all.deb
+rm -rf atzlinux-v12-archive-keyring_lastest_all.deb
 
 ### microsoft edge mirrors
 
