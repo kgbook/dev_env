@@ -25,11 +25,6 @@ bc gawk perl curl wget cpio libncurses5 libssl-dev expect fakeroot diffstat texi
 ncurses-dev gperf flex liblz4-tool time lib32ncurses-dev gnupg gcc-multilib g++-multilib \
 x11proto-core-dev libx11-dev fontconfig libtool libudev-dev net-tools  htop iotop
 
-### atzlinux mirrors
-wget -c -O atzlinux-v12-archive-keyring_lastest_all.deb https://www.atzlinux.com/atzlinux/pool/main/a/atzlinux-archive-keyring/atzlinux-v12-archive-keyring_lastest_all.deb
-echo $sudo_passwd | sudo -S dpkg -i atzlinux-v12-archive-keyring_lastest_all.deb
-rm -rf atzlinux-v12-archive-keyring_lastest_all.deb
-
 ### microsoft edge mirrors
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 echo $sudo_passwd | sudo -S install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
@@ -331,7 +326,9 @@ rm klogg.deb
 echo $sudo_passwd | sudo -S aptitude install -y maven
 
 ## install wps
-echo $sudo_passwd | sudo -S aptitude install -y wps-office wps-office-fonts ttf-mscorefonts-atzlinux fonts-adobe-source-han-cn libtiff5
+wget https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11719/wps-office_11.1.0.11719.XA_amd64.deb -O wps.deb
+echo $sudo_passwd | sudo -S dpkg -i wps.deb
+rm wps.deb
 
 ### install miniconda
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda-latest.sh
