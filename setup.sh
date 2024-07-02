@@ -40,20 +40,18 @@ echo $sudo_passwd | sudo -S aptitude install microsoft-edge-stable
 
 ## firewall
 echo $sudo_passwd | sudo -S aptitude install -y ufw
-alias ufw_exe="echo $sudo_passwd | sudo -S ufw"
-alias iptables_exe="echo $sudo_passwd | sudo -S iptables"
-ufw_exe enable
-ufw_exe allow ssh
-ufw_exe allow http
-ufw_exe allow https
-ufw_exe allow ftp
-ufw_exe allow nfs
-ufw_exe allow in proto udp from any to 224.0.0.251 port 5353
-ufw_exe allow out proto udp to 224.0.0.251 port 5353
-ufw_exe allow proto igmp from any to 224.0.0.1
-ufw_exe allow proto igmp from any to 224.0.0.251
-ufw_exe default deny
-ufw_exe status verbose
+echo $sudo_passwd | sudo -S ufw enable
+echo $sudo_passwd | sudo -S ufw allow ssh
+echo $sudo_passwd | sudo -S ufw allow http
+echo $sudo_passwd | sudo -S ufw allow https
+echo $sudo_passwd | sudo -S ufw allow ftp
+echo $sudo_passwd | sudo -S ufw allow nfs
+echo $sudo_passwd | sudo -S ufw allow in proto udp from any to 224.0.0.251 port 5353
+echo $sudo_passwd | sudo -S ufw allow out proto udp to 224.0.0.251 port 5353
+echo $sudo_passwd | sudo -S ufw allow proto igmp from any to 224.0.0.1
+echo $sudo_passwd | sudo -S ufw allow proto igmp from any to 224.0.0.251
+echo $sudo_passwd | sudo -S ufw default deny
+echo $sudo_passwd | sudo -S ufw status verbose
 
 ### adb
 echo $sudo_passwd | sudo -S aptitude install -y adb android-sdk-platform-tools-common
