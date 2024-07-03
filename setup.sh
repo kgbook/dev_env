@@ -359,6 +359,19 @@ wget https://dldir1.qq.com/qqfile/qq/QQNT/Linux/QQ_3.2.9_240617_amd64_01.deb -O 
 echo $sudo_passwd | sudo -S dpkg -i qq.deb
 rm qq.deb
 
+## scrcpy
+# for Debian/Ubuntu
+echo $sudo_passwd | sudo -S apt install -y ffmpeg libsdl2-2.0-0 adb wget \
+                 gcc git pkg-config meson ninja-build libsdl2-dev \
+                 libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
+                 libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
+
+git clone https://github.com/Genymobile/scrcpy
+pushd scrcpy
+./install_release.sh
+popd
+rm -rf scrcpy
+
 ## nvidia driver
 echo $sudo_passwd | sudo -S aptitude install -y nvidia-detect
 use_nvidia_driver=$(nvidia-detect | grep nvidia-driver | wc -l)
